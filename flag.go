@@ -13,6 +13,6 @@ func (c *Client) NewFlag(name string, offset uint64) error {
 
 // NewFlagWithLength  ..
 func (c *Client) NewFlagWithLength(name string, offset, length uint64) error {
-	_, err := c.Run(fmt.Sprintf("'%s %s %d @ %d'", flagCMD, name, length, offset))
+	_, err := c.Run(fmt.Sprintf("\"%s %s %d @ %d\"", flagCMD, name, length, offset))
 	return err
 }
