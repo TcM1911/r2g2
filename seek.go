@@ -21,8 +21,9 @@ import (
 	"strconv"
 )
 
-const (
+var (
 	seekCMD   = "s"
+	space     = " "
 	seekToCMD = seekCMD + space
 )
 
