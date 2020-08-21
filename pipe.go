@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright (C) Joakim Kennedy, 2019
+ * Copyright (C) Joakim Kennedy, 2019-2020
  */
 
 package r2g2
@@ -29,9 +29,12 @@ const (
 )
 
 var (
-	ErrR2PipeNotAvailable  = errors.New("R2PIPEs are not available")
-	ErrPipeOutNotAvailable = errors.New("Could not connect to Pipe out FD")
-	ErrPipeInNotAvailable  = errors.New("Could not connect to Pipe in FD")
+	// ErrR2PipeNotAvailable indicates that R2's pipes are not available.
+	ErrR2PipeNotAvailable = errors.New("R2PIPEs are not available")
+	// ErrPipeOutNotAvailable indicates that R2's out pipe is not available.
+	ErrPipeOutNotAvailable = errors.New("could not connect to Pipe out FD")
+	// ErrPipeInNotAvailable indicates that R2's in pipe is not available.
+	ErrPipeInNotAvailable = errors.New("could not connect to Pipe in FD")
 )
 
 // CheckForR2Pipe returns true if the Environment variables R2PIPE_IN and
@@ -49,6 +52,9 @@ func getFd(file string) (*os.File, error) {
 	return os.NewFile(uintptr(fd), file), nil
 }
 
+// OpenPipe connects to Radare2 via the pipe interface and returns a Client.
+// This should be used for applications called from with in Radare2 using
+// the "#!pipe" command.
 func OpenPipe() (*Client, error) {
 	if !CheckForR2Pipe() {
 		return nil, ErrR2PipeNotAvailable

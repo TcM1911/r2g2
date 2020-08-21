@@ -12,25 +12,66 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright (C) Joakim Kennedy, 2019
+ * Copyright (C) Joakim Kennedy, 2019-2020
  */
 
 package r2g2
 
-import "fmt"
-
-const (
-	flagCMD = "f"
+import (
+	"encoding/json"
+	"fmt"
 )
 
-// NewFlag ..
+const (
+	flagCMD               = "f \"%s\" %d @ %d"
+	flagRemoveCMD         = "f-%s"
+	flagRemoveAtOffsetCMD = "f-@%d"
+	flagListAllCMD        = "fj"
+	flagRenameCMD         = "fr %s %s" // fr [[old]] [new]
+)
+
+// Flag is a representation of an radare2 flag.
+type Flag struct {
+	Name     string `json:"name"`
+	RealName string `json:"realname"`
+	Size     uint64 `json:"size"`
+	Offset   uint64 `json:"offset"`
+}
+
+// NewFlag creates a flag with the name at the offset with a length of 1.
 func (c *Client) NewFlag(name string, offset uint64) error {
 	return c.NewFlagWithLength(name, offset, uint64(1))
 }
 
-// NewFlagWithLength  ..
+// NewFlagWithLength creates a flag with the name at the offset with the length.
 func (c *Client) NewFlagWithLength(name string, offset, length uint64) error {
-	cmd := fmt.Sprintf("%s \"%s\" %d @ %d", flagCMD, name, length, offset)
+	cmd := fmt.Sprintf(flagCMD, name, length, offset)
 	_, err := c.Run(cmd)
 	return err
+}
+
+// GetFlags returns all the flags in the current session.
+func (c *Client) GetFlags() ([]*Flag, error) {
+	buf, err := c.Run(fmt.Sprintf(flagListAllCMD))
+	if err != nil {
+		return nil, err
+	}
+
+	var jsonData []json.RawMessage
+	err = json.Unmarshal(buf, &jsonData)
+	if err != nil {
+		return nil, err
+	}
+
+	flags := make([]*Flag, 0, len(jsonData))
+	for _, v := range jsonData {
+		var f *Flag
+		err = json.Unmarshal(v, &f)
+		if err != nil {
+			return nil, err
+		}
+		flags = append(flags, f)
+	}
+
+	return flags, nil
 }

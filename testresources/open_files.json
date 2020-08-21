@@ -1,0 +1,10 @@
+[
+    {
+        "raised": true,
+        "fd": 3,
+        "uri": "/bin/ls",
+        "from": 0,
+        "writable": false,
+        "size": 51888
+    }
+]

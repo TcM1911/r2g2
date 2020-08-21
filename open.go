@@ -22,10 +22,6 @@ import (
 	"errors"
 )
 
-/*
-[{"raised":false,"fd":3,"uri":"/bin/ls","from":0,"writable":false,"size":137640},{"raised":true,"fd":4,"uri":"null://4848","from":0,"writable":true,"size":4848}]
-*/
-
 const (
 	listOpenedFilesCMD = "oj"
 )
@@ -35,6 +31,7 @@ var (
 	ErrNoActiveFile = errors.New("no active file")
 )
 
+// OpenFile holds information about an open file.
 type OpenFile struct {
 	Active         bool   `json:"raised"`
 	FileDescriptor int    `json:"fd"`

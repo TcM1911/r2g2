@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, see <http://www.gnu.org/licenses/>.
  *
- * Copyright (C) Joakim Kennedy, 2019
+ * Copyright (C) Joakim Kennedy, 2019-2020
  */
 
 package r2g2
@@ -22,13 +22,26 @@ import (
 )
 
 const (
-	analyzeFunctionCMD         = "af"
-	analyzeAllCMD              = "aa"
-	analyzeAllAndAutorenameCMD = "aaa"
+	analyzeFunctionCMD          = "af %s @ %d"
+	analyzeFunctionRecursiveCMD = "afr %s @ %d"
+	analyzeAllCMD               = "aa"
+	analyzeAllAndAutorenameCMD  = "aaa"
 )
 
 // AnalyzeFunction analyzing the function starting at the address addr.
 func (c *Client) AnalyzeFunction(name string, addr uint64) error {
-	_, err := c.Run(fmt.Sprintf("af %s @ %d", name, addr))
+	_, err := c.Run(fmt.Sprintf(analyzeFunctionCMD, name, addr))
+	return err
+}
+
+// AnalyzeFunctionRecursive analyzing the function recursivly starting at the address addr.
+func (c *Client) AnalyzeFunctionRecursive(name string, addr uint64) error {
+	_, err := c.Run(fmt.Sprintf(analyzeFunctionRecursiveCMD, name, addr))
+	return err
+}
+
+// AnalyzeAll performs the "aaa" command.
+func (c *Client) AnalyzeAll() error {
+	_, err := c.Run(analyzeAllAndAutorenameCMD)
 	return err
 }

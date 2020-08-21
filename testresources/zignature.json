@@ -1,0 +1,93 @@
+[
+    {
+        "name": "r2g2zig-main",
+        "bytes": "554889e54157415641554154534881ec180600004989f74189fe488d85c0fdffff488945d085ff7f05e822310000488d35fe39000031ffe86a340000bf01000000e80634000085c0745ec705cc51000050000000488d3dd9390000e8bc3300004885c0740f803800740a4889c7e84a330000eb22488d55c8be68740840bf0100000031c0e8bd33000083f8ff740e0fb745ca85c07406890584510000c705e252000001000000eb26c605a151000001488d3d7e390000e8613300004885c0740e4889c7e8f4320000890552510000e85b33000085c07507c605765100000141bc100000004c8d2d51390000488d1d760700004489f74c89fe4c89eae8223300008d48db83f9530f87960300004863048b4801d8ffe0c7055152000001000000ebd1c7055d5200000100000031c0eb25c7057352000001000000c7054152000000000000c6050651000000eba631c089053452000089053a520000890538520000eb90c705f45100000100000031c08905f4510000890536520000e973ffffffc605de50000001e967ffffff31c08905f55100008905fb510000c705f551000001000000e94affffff4183e4ed4183cc02488d3dae380000488d35ae380000e8053200004489e181e1eefbffff84c0440f45e1e91bffffffc7058351000001000000e90cffffffc6057b50000001e900ffffffc605",
+        "mask": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00ff00000000ff000000000000ffffff00000000ffffffffffff00000000ffffff00ff000000000000000000ff000000000000ff00000000ffffffff00ffffffff00ffffffff00000000ff00ffffffffff00000000ffffffffffffffff00000000ffffffff00ffffffffffffff00ff0000000000ff000000000000000000ff00ff000000000000ff000000000000ff00000000ffffffff00ffffffff00000000ff0000000000ff00000000ffffff00ff000000000000ff0000000000ff000000000000ff000000000000ffffffffffffffffffff00000000ffffffff0000ffff00000000ffffffffffffffffffff000000000000000000ff00ff000000000000000000ffffff00ff000000000000000000ff000000000000000000ff000000000000ff00ffffff0000000000ff0000000000ff0000000000ff00ff000000000000000000ffffff0000000000ff0000000000ff00000000ff000000000000ff00000000ffffff0000000000ff0000000000ff000000000000000000ff00000000ff000000ffffffffff000000000000ff000000000000ff00000000ffffffff0000000000ffffffffffffff00000000ff000000000000000000ff00000000ff000000000000ff00000000ffff",
+        "graph": {
+            "cc": 216,
+            "nbbs": 120,
+            "edges": 158,
+            "ebbs": 5,
+            "bbsum": 2147
+        },
+        "addr": 4294971488,
+        "realname": "main",
+        "refs": [
+            "sym.func.1000041b0",
+            "sym.imp.setlocale",
+            "sym.imp.isatty",
+            "sym.imp.getenv",
+            "sym.imp.atoi",
+            "sym.imp.ioctl",
+            "sym.imp.getenv",
+            "sym.imp.atoi",
+            "sym.imp.getuid",
+            "sym.imp.getopt",
+            "sym.imp.compat_mode",
+            "sym.imp.compat_mode",
+            "sym.imp.setenv",
+            "sym.imp.compat_mode",
+            "sym.imp.compat_mode",
+            "sym.imp.compat_mode",
+            "sym.imp.compat_mode",
+            "sym.func.1000041b0",
+            "sym.imp.getenv",
+            "sym.imp.isatty",
+            "sym.imp.getenv",
+            "sym.imp.getenv",
+            "sym.imp.tgetent",
+            "sym.imp.tgetstr",
+            "sym.imp.tgetstr",
+            "sym.imp.tgetstr",
+            "sym.imp.tgetstr",
+            "sym.imp.tgetstr",
+            "sym.imp.tgetstr",
+            "sym.imp.signal",
+            "sym.imp.signal",
+            "sym.imp.getenv",
+            "sym.func.100003828",
+            "sym.imp.getbsize",
+            "sym.imp.sysctlbyname",
+            "sym.func.1000041d8",
+            "sym.func.100001a18",
+            "sym.imp.exit"
+        ],
+        "xrefs": [],
+        "vars": [
+            "b-576",
+            "b-48",
+            "b-60",
+            "b-64",
+            "b-1600",
+            "b-56",
+            "b-54",
+            "r114",
+            "r110"
+        ],
+        "types": [
+            {
+                "name": "func.main.ret",
+                "type": "int"
+            },
+            {
+                "args": [
+                    {
+                        "name": "argc",
+                        "type": "int"
+                    },
+                    {
+                        "name": "argv",
+                        "type": "char **"
+                    },
+                    {
+                        "name": "envp",
+                        "type": "char **"
+                    }
+                ]
+            }
+        ],
+        "hash": {
+            "bbhash": "85b40cab0b4cbe8002871a5480991fc56904ac6fdcf680d0fe5554f05badb805"
+        }
+    }
+]

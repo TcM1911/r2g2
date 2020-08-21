@@ -17,12 +17,17 @@
 
 package r2g2
 
-import "encoding/json"
-
-const (
-	getFunctionDetailCMD = "pdfj"
+import (
+	"encoding/json"
+	"fmt"
 )
 
+const (
+	getFunctionDetailCMD   = "pdfj"
+	getFunctionAtOffsetCMD = "pdfj @ %d"
+)
+
+// Function holds information about a radare function.
 type Function struct {
 	Name string `json:"name"`
 	Size uint64 `json:"size"`
@@ -30,6 +35,7 @@ type Function struct {
 	Ops  []*Op  `json:"ops"`
 }
 
+// Op holds information about an operation.
 type Op struct {
 	Offset   uint64   `json:"offset"`
 	Ptr      uint64   `json:"ptr"`
@@ -51,17 +57,33 @@ type Op struct {
 	XRefs    []*XRef  `json:"xrefs"`
 }
 
+// XRef holds information about a cross-reference.
 type XRef struct {
 	Addr uint64 `json:"addr"`
 	Type string `jsoin:"type"`
 }
 
+// GetCurrentFunction returns information about the current function.
 func (c *Client) GetCurrentFunction() (*Function, error) {
 	data, err := c.Run(getFunctionDetailCMD)
 	if err != nil {
 		return nil, err
 	}
+	return parseFunctionResp(data)
+}
+
+// GetFunctionAtOffset returns function information about a function
+// located at the given offset.
+func (c *Client) GetFunctionAtOffset(offset uint64) (*Function, error) {
+	data, err := c.Run(fmt.Sprintf(getFunctionAtOffsetCMD, offset))
+	if err != nil {
+		return nil, err
+	}
+	return parseFunctionResp(data)
+}
+
+func parseFunctionResp(data []byte) (*Function, error) {
 	var function Function
-	err = json.Unmarshal(data, &function)
+	err := json.Unmarshal(data, &function)
 	return &function, err
 }
