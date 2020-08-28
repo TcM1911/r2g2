@@ -51,6 +51,17 @@ func TestGetOffsetOfSymbol(t *testing.T) {
 	is.Equal(offset, uint64(0x100001060)) // Correct offset of main
 }
 
+func TestGenerateZignature(t *testing.T) {
+	is := is.New(t)
+	c := setupClient(lsFile, is)
+
+	err := c.AnalyzeAll()
+	is.NoErr(err) // Analyzing all functions shouldn't fail.
+
+	_, err = c.ZignatureFunctionOffset(uint64(0x1000041b0))
+	is.NoErr(err)
+}
+
 func setupClient(name string, is *is.I) *r2g2.Client {
 	fp, err := getGoldenFilePath(name)
 	is.NoErr(err)

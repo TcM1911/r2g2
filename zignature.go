@@ -67,12 +67,18 @@ func (c *Client) ZignatureFunctionOffset(offset uint64) (*Zignature, error) {
 }
 
 func genFuncZig(c *Client, symbol string) (*Zignature, error) {
-	data, err := c.Run(fmt.Sprintf(
+	_, err := c.Run(fmt.Sprintf(
 		"%s %s r2g2zig-%s",
 		generateZignatureForFunctionCMD, symbol, symbol))
 	if err != nil {
 		return nil, fmt.Errorf("failed to generate zignature for \"%s\": %w", symbol, err)
 	}
+
+	data, err := c.Run(getZignaturesCMD)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get zignatures: %w", err)
+	}
+
 	var buf []json.RawMessage
 	err = json.Unmarshal(data, &buf)
 	if err != nil {

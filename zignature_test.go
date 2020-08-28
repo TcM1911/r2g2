@@ -32,13 +32,15 @@ func TestGenerateZignatureForSymbol(t *testing.T) {
 	fp, err := getGoldenFilePath("zignature.json")
 	is.NoErr(err)
 
+	// Data returned when generating the zignatures.
+	data0 := []byte{}
+
 	data, err := ioutil.ReadFile(fp)
 	is.NoErr(err)
 	data = append(data, '\n', 0x00)
-	out := bytes.NewBuffer(data)
 
 	in := new(bytes.Buffer)
-	c := &Client{reader: out, writer: in}
+	c := &Client{reader: &chainedResponse{data: [][]byte{data0, data}}, writer: in}
 
 	z, err := c.ZignatureFunction("main")
 	is.NoErr(err)
@@ -53,18 +55,19 @@ func TestGenerateZignatureAtOffset(t *testing.T) {
 	fp2, err := getGoldenFilePath("zignature.json")
 	is.NoErr(err)
 
+	// Data returned when generating the zignatures.
+	data0 := []byte{}
+
 	data1, err := ioutil.ReadFile(fp1)
 	is.NoErr(err)
 	data1 = append(data1, '\n', 0x00)
-	// out := bytes.NewBuffer(data)
 
 	data2, err := ioutil.ReadFile(fp2)
 	is.NoErr(err)
 	data2 = append(data2, '\n', 0x00)
-	// out.Write(data)
 
 	in := new(bytes.Buffer)
-	c := &Client{reader: &chainedResponse{data: [][]byte{data1, data2}}, writer: in}
+	c := &Client{reader: &chainedResponse{data: [][]byte{data1, data0, data2}}, writer: in}
 
 	z, err := c.ZignatureFunctionOffset(0x1337)
 	is.NoErr(err)
