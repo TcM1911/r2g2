@@ -34,7 +34,7 @@ func TestNewFlag(t *testing.T) {
 
 	flagName := "test_flag"
 	flagOff := uint64(0x1337)
-	expectedCMD := "f \"" + flagName + "\" 1 @ 4919\n"
+	expectedCMD := "\"f " + flagName + " 1 @ 4919\"\n"
 
 	err := c.NewFlag(flagName, flagOff)
 	is.NoErr(err)
