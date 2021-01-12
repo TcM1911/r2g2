@@ -18,12 +18,13 @@
 package r2g2
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 )
 
 const (
-	flagCMD               = "f \"%s\" %d @ %d"
+	flagCMD               = "\"f %s %d @ %d\""
 	flagRemoveCMD         = "f-%s"
 	flagRemoveAtOffsetCMD = "f-@%d"
 	flagListAllCMD        = "fj"
@@ -45,7 +46,7 @@ func (c *Client) NewFlag(name string, offset uint64) error {
 
 // NewFlagWithLength creates a flag with the name at the offset with the length.
 func (c *Client) NewFlagWithLength(name string, offset, length uint64) error {
-	cmd := fmt.Sprintf(flagCMD, name, length, offset)
+	cmd := fmt.Sprintf(flagCMD, replaceBadFlagChars(name), length, offset)
 	_, err := c.Run(cmd)
 	return err
 }
@@ -74,4 +75,43 @@ func (c *Client) GetFlags() ([]*Flag, error) {
 	}
 
 	return flags, nil
+}
+
+// replaceBadFlagChars replaces characters that are not allowed in flag names
+// for an "_" character.
+func replaceBadFlagChars(s string) string {
+	buf := []byte(s)
+	for _, c := range badFlagChars {
+		buf = bytes.ReplaceAll(buf, []byte(c), []byte("_"))
+	}
+
+	// Replace / with . instead.
+	buf = bytes.ReplaceAll(buf, []byte("/"), []byte("_"))
+	return string(buf)
+}
+
+var badFlagChars = []string{
+	"*",
+	"{",
+	"}",
+	"[",
+	"]",
+	"(",
+	")",
+	"#",
+	" ",
+	"-",
+	"/",
+	"\\",
+	"<",
+	">",
+	"!",
+	"?",
+	"$",
+	";",
+	"%",
+	"@",
+	"`",
+	",",
+	"\"",
 }
