@@ -24,7 +24,7 @@ import (
 )
 
 const (
-	flagCMD               = "\"f %s %d @ %d\""
+	flagCMD               = "f %s %d @ %d"
 	flagRemoveCMD         = "f-%s"
 	flagRemoveAtOffsetCMD = "f-@%d"
 	flagListAllCMD        = "fj"
@@ -114,4 +114,5 @@ var badFlagChars = []string{
 	"`",
 	",",
 	"\"",
+	"·",
 }
